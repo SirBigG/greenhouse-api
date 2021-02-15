@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  core:
+    build:
+      context: .
+#    command: /bin/sh -c "/risk-management/bin/local.sh"
+    container_name: greenhouse-api
+    # settings to use breakpoint with docker
+    # to connect just write in console: docker attach rcore <container id>
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/greenhouse-api
+    ports:
+      - 8088:8000
+    links:
+      - influxdb
+    depends_on:
+      - influxdb
+    env_file:
+      - project.env
+
+  influxdb:
+    image: influxdb:latest
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    env_file:
+      - project.env

@@ -1,0 +1,4 @@
+project.env
+influxdb
+.idea
+__pycache__
