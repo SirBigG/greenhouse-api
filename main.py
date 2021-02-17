@@ -12,18 +12,9 @@ from aioinflux import InfluxDBClient
 
 app = FastAPI()
 
-origins = [
-    "http://greenhouse.agromega.in.ua"
-    "http://localhost",
-    "http://localhost:8080",
-    "http://localhost:8000",
-    "http://localhost:53981",
-    "http://localhost:57489",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
