@@ -13,7 +13,7 @@ from aioinflux import InfluxDBClient
 app = FastAPI()
 
 origins = [
-    "http://greenhouse-api.agromega.in.ua"
+    "http://greenhouse.agromega.in.ua"
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:8000",
