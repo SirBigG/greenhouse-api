@@ -22,7 +22,7 @@ services:
       - project.env
 
   influxdb:
-    image: influxdb:latest
+    image: influxdb:1.8
     volumes:
       - ./influxdb:/var/lib/influxdb
     env_file:
