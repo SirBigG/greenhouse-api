@@ -52,10 +52,10 @@ async def save_temperature(item: Humidity):
 
 
 @app.get("/temperature")
-async def get_temperature():
-    return await influx_client.query('SELECT * FROM temperature WHERE time > now() - 2h')
+async def get_temperature(period: str = '1h'):
+    return await influx_client.query(f'SELECT * FROM temperature WHERE time > now() - {period}')
 
 
 @app.get("/humidity")
-async def get_temperature():
-    return await influx_client.query('SELECT * FROM humidity WHERE time > now() - 2h')
+async def get_humidity(period: str = '1h'):
+    return await influx_client.query(f'SELECT * FROM humidity WHERE time > now() - {period}')
