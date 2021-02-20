@@ -31,6 +31,24 @@ class Humidity(BaseModel):
     humidity: float
 
 
+class SensorData(BaseModel):
+    temperature: float
+    humidity: float
+    moisture: float
+
+
+@app.post("/store/data")
+async def save_data(item: SensorData):
+    _time = str(datetime.utcnow())
+    for field_name in SensorData.__fields__.keys():
+        await influx_client.write({
+            "time": _time,
+            "measurement": field_name,
+            "fields": {"value": getattr(item, field_name)}
+        })
+    return {"success": True}
+
+
 @app.post("/temperature")
 async def save_temperature(item: Temperature):
     await influx_client.write({
@@ -59,3 +77,8 @@ async def get_temperature(period: str = '1h'):
 @app.get("/humidity")
 async def get_humidity(period: str = '1h'):
     return await influx_client.query(f'SELECT * FROM humidity WHERE time > now() - {period}')
+
+
+@app.get("/moisture")
+async def get_moisture(period: str = '1h'):
+    return await influx_client.query(f'SELECT * FROM moisture WHERE time > now() - {period}')
